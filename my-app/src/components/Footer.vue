@@ -1,9 +1,7 @@
 <script setup lang="ts">
-    import VinylItem from './VinylItem.vue'
 </script>
 
 <template>
-  <VinylItem />
 </template>
 
 <style scoped>
