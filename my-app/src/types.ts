@@ -1,9 +1,10 @@
 export interface Vinyl {
   id:number,
   name:string,
-  groupName:string,
+  bandName:string,
   releaseYear:string,
-  price:string
-  }
+  price:string,
+  quantity:number
+}
 
   
