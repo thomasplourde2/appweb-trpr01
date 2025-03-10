@@ -1,16 +1,36 @@
 <script setup lang="ts">
     import { ref } from 'vue';
-    const name = ref<string>('')
-    const bandName = ref<string>('')
-    const releaseYear = ref<string>('')
-    const price = ref<string>('')
+    import { type Vinyl } from '../types'
+    const props = defineProps<{ vinylToDuplicate?: Vinyl }>();
+    const name = ref<string>(props.vinylToDuplicate?.name || '')
+    const bandName = ref<string>(props.vinylToDuplicate?.bandName || '')
+    const releaseYear = ref<string>(props.vinylToDuplicate?.releaseYear?.toString() || '')
+    const price = ref<string>(props.vinylToDuplicate?.price || '')
     const emit = defineEmits<{
     (event: 'clickAdd', name: string, bandName:string, releaseYear:number, price:string): void;
 }>()
+
+    const isYearValid = () => {
+        return !isNaN(parseInt(releaseYear.value))
+    }
+    const isPriceValid = () => {
+        return !isNaN(parseInt(price.value))
+    }
+    const isFormValid = () => {
+        if(isYearValid() && isPriceValid()){
+            return true
+        }
+        return false
+    }
+    const submitNewVinyl = () => {
+        if(isFormValid()){
+            emit('clickAdd', name.value, bandName.value, parseInt(releaseYear.value), price.value);
+        }
+    }
 </script>
 
 <template>
-    <div class="card text-black text-bg-secondary mb-3" style="width: 20rem; height: 32rem;">
+    <div class="card text-black text-bg-secondary mb-3" style="width: 20rem;">
         <div class="card-header">
             Ajouter un Vinyle :
         </div>
@@ -26,13 +46,15 @@
         <div class="mb-3">
             <label for="releaseYear" class="form-label">Année</label>
             <input v-model="releaseYear" class="form-control" id="releaseYear" placeholder="Année de sortie">
+            <div v-if="!isYearValid()" class="text-danger">L'année n'est pas valide.</div>
         </div>
         <div class="mb-3">
             <label for="price" class="form-label">Prix</label>
             <input v-model="price" class="form-control" id="price" placeholder="Prix du vinyle">
+            <div v-if="!isPriceValid()" class="text-danger">Le prix n'est pas valide.</div>
         </div>
         <div class="mb-3 text-center">
-            <button type="button" class="btn" @click="emit('clickAdd', name, bandName, parseInt(releaseYear), price)"  :disabled="!name.trim() || !bandName.trim() || !releaseYear.trim() || !price.trim()">Ajouter</button>
+            <button type="button" class="btn btn-dark" @click="submitNewVinyl"  :disabled="!name.trim() || !bandName.trim() || !releaseYear.trim() || !price.trim() || !isFormValid()">Ajouter</button>
         </div>
         </div>
     </div>

@@ -4,7 +4,6 @@
 <template>
     <footer class="bg-black">
         <div class=" p-1 bg-danger"></div>
-        <p class="text-danger text-center">VINYLE</p>
     </footer>
 </template>
 

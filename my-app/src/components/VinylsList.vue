@@ -3,6 +3,9 @@
     defineProps<{ vinyls: Vinyl[] }>()
     const emit = defineEmits<{
         (event: 'clickRemove', vinyl: Vinyl): void;
+        (event: 'clickShowModify', vinyl: Vinyl): void;
+        (event: 'clickDuplicate', vinyl: Vinyl): void;
+        (event: 'clickDetails', vinyl: Vinyl): void;
     }>()
 </script>
 
@@ -42,13 +45,13 @@
                         <button type="button" class="btn btn-danger btn-sm" @click="emit('clickRemove', vinyl)">
                             <i class="bi bi-trash"></i>
                         </button>
-                        <button type="button" class="btn btn-success btn-sm">
+                        <button type="button" class="btn btn-success btn-sm" @click="emit('clickShowModify', vinyl)">
                             <i class="bi bi-pencil"></i>
                         </button>
-                        <button type="button" class="btn btn-primary btn-sm">
+                        <button type="button" class="btn btn-primary btn-sm" @click="emit('clickDuplicate', vinyl)">
                             <i class="bi bi-copy"></i>
                         </button>
-                        <button type="button" class="btn btn-info btn-sm">
+                        <button type="button" class="btn btn-info btn-sm" @click="emit('clickDetails', vinyl)">
                             <i class="bi bi-three-dots"></i>
                         </button>
                     </div>
